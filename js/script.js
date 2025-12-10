@@ -64,12 +64,17 @@ function generateTitleLinks(customSelector = '') {
 generateTitleLinks();
 
 function calculateTagClass(count, params) {
-  const classNumber = Math.floor(
-    ((count - params.min) / (params.max - params.min)) *
-      (optCloudClassCount - 1) +
-      1
-  );
-  return optCloudClassPrefix + classNumber;
+  let classNumber = 0 ;
+  if (params.max === params.min) {
+    return optCloudClassPrefix + Math.ceil(optCloudClassCount / 2);
+  } else {
+    classNumber = Math.floor(
+      ((count - params.min) / (params.max - params.min)) *
+        (optCloudClassCount - 1) +
+        1
+    );
+    return optCloudClassPrefix + classNumber;
+  }
 }
 
 function generateTags() {
@@ -79,12 +84,10 @@ function generateTags() {
     const tagsWrapper = post.querySelector('.post-tags .list');
     let html = '';
     const articleTags = post.getAttribute('data-tags');
-    tagsWrapper.innerHTML = html;
     const articleTagsArray = articleTags.split(' ');
     for (let tag of articleTagsArray) {
       const linkHTMLData = { id: 'tag-' + tag, title: tag };
       const linkHTML = templates.tagLink(linkHTMLData);
-      //const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
       html += linkHTML;
 
       if (!allTags.hasOwnProperty(tag)) {
@@ -122,14 +125,6 @@ function calculateTagsParams(tags) {
     }
   }
   return params;
-
-  /*alternatywne rozwiązanie
-    const tagsArray = Object.values(tags);
-  return {
-    min: Math.min(...tagsArray),
-    max: Math.max(...tagsArray)
-  };
-  */
 }
 
 generateTags();
