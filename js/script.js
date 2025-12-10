@@ -133,7 +133,6 @@ function tagClickHandler(event) {
   event.preventDefault();
   const clickedElement = this;
   const href = clickedElement.getAttribute('href');
-  console.log(href);
   const tag = href.replace('#tag-', '');
   const activeTagLinks = document.querySelectorAll('a.active[href^="#tag-"]');
   for (let activeTagLink of activeTagLinks) {
@@ -174,7 +173,6 @@ function generateAuthors() {
     html += linkHTML;
     authorWrapper.innerHTML = html;
   }
-  console.log(allAuthors);
   const authorList = document.querySelector(optAuthorsListSelector);
 
   const allAuthorsData = { authors: [] };
